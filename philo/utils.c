@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:57:55 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/17 20:55:28 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/18 18:31:11 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,28 @@ void	get_input(t_input_vars *input, char **argv)
 	input->time_to_die = atoi(argv[2]);
 	input->time_to_eat = atoi(argv[3]);
 	input->time_to_sleep = atoi(argv[4]);
+}
+
+void	print_philos(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->num_philos)
+	{
+		printf("Philo's ID: %i\n", table->philosophers[i].id);
+		i++;
+	}
+}
+
+long	current_time(t_timeval *start)
+{
+	t_timeval	current;
+	long		start_microsec;
+	long		current_microsec;
+
+	gettimeofday(&current, NULL);
+	start_microsec = (start->tv_sec * 1000000) + start->tv_usec;
+	current_microsec = (current.tv_sec * 1000000) + current.tv_usec;
+	return (current_microsec - start_microsec);
 }

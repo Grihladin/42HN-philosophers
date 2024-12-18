@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/17 21:05:31 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/18 18:31:32 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+typedef struct timeval	t_timeval;
+
+typedef struct s_philosopher
+{
+	int					id;
+	int					left_fork;
+	int					right_fork;
+	pthread_t			thread;
+	struct s_table		*table;
+	int					eating;
+	int					meals_eaten;
+	long				last_meal_time;
+}						t_philosopher;
+
+typedef struct s_table
+{
+	t_timeval			start;
+	int					num_philos;
+	pthread_mutex_t		*forks;
+	t_philosopher		*philosophers;
+}						t_table;
+
 typedef struct s_input_vars
 {
 	int					number_of_philosophers;
@@ -26,12 +48,6 @@ typedef struct s_input_vars
 	int					time_to_sleep;
 }						t_input_vars;
 
-typedef struct timeval	t_timeval;
-
-typedef struct s_philo
-{
-	pthread_t			id;
-
-}						t_philo;
-
 void					get_input(t_input_vars *input, char **argv);
+long					current_time(t_timeval *start);
+void					print_philos(t_table *table);
