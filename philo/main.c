@@ -6,57 +6,71 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/18 18:32:38 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/21 00:53:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	to_sleep(t_philosopher *philo)
+void	cout(t_timeval *start_time, int id, char *messege)
 {
-	printf("%d %ld is sleeping\n", philo->id,
-		current_time(&philo->table->start));
+	printf("%lu %i %s\n", current_time(start_time), id, messege);
 }
 
-void	init_philosophers(t_table *table, int n_philos)
+void	to_sleep(t_philosopher *philo)
+{
+	cout(philo->table->start, philo->id, "is sleeping");
+}
+
+void	init_philosophers(t_table *table)
 {
 	int	i;
 
-	table->num_philos = n_philos;
-	table->philosophers = malloc(sizeof(t_philosopher) * n_philos);
-	table->forks = malloc(sizeof(pthread_mutex_t) * n_philos);
+	table->philosophers = malloc(sizeof(t_philosopher) * table->num_philos);
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philos);
 	i = 0;
-	while (i < n_philos)
+	while (i < table->num_philos)
 	{
 		table->philosophers[i].id = i;
 		table->philosophers[i].left_fork = i;
-		table->philosophers[i].right_fork = (i + 1) % n_philos;
+		table->philosophers[i].right_fork = (i + 1) % table->num_philos;
+		table->philosophers[i].table = table;
 		pthread_mutex_init(&table->forks[i], NULL);
 		i++;
 	}
 }
 
-void	start_simulathion(t_input_vars input)
+void	start_simulathion(t_table *table)
 {
-	t_table	table;
+	int	i;
 
-	init_philosophers(&table, input.number_of_philosophers);
-	print_philos(&table);
-	printf("fine");
-	// gettimeofday(&socrat.start, NULL);
-	// pthread_create(&socrat.thread, NULL, (void *)to_sleep, &socrat);
-	// pthread_join(socrat.thread, NULL);
+	i = 0;
+	table->start = malloc(sizeof(t_timeval));
+	gettimeofday(table->start, NULL);
+	init_philosophers(table);
+	while (i < table->num_philos)
+	{
+		pthread_create(&table->philosophers[i].thread, NULL, (void *)to_sleep,
+			(void *)&table->philosophers[i]);
+		i++;
+	}
+	i = 0;
+	while (i < table->num_philos)
+	{
+		pthread_join(table->philosophers[i].thread, NULL);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_input_vars	input;
+	t_table	table;
 
 	if (argc != 5)
 	{
 		printf("INVALID INPUT\n");
 		return (1);
 	}
-	get_input(&input, argv);
-	start_simulathion(input);
+	get_input(&table, argv);
+	start_simulathion(&table);
 }

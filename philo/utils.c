@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:57:55 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/18 18:31:11 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/21 00:43:08 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	get_input(t_input_vars *input, char **argv)
+void	get_input(t_table *input, char **argv)
 {
-	input->number_of_philosophers = atoi(argv[1]);
+	input->num_philos = atoi(argv[1]);
 	input->time_to_die = atoi(argv[2]);
 	input->time_to_eat = atoi(argv[3]);
 	input->time_to_sleep = atoi(argv[4]);

@@ -6,11 +6,10 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/18 18:31:32 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/21 00:52:17 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../librarys/libft/libft.h"
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,28 +25,22 @@ typedef struct s_philosopher
 	int					left_fork;
 	int					right_fork;
 	pthread_t			thread;
-	struct s_table		*table;
 	int					eating;
 	int					meals_eaten;
 	long				last_meal_time;
+	struct s_table		*table;
 }						t_philosopher;
 
 typedef struct s_table
 {
-	t_timeval			start;
-	int					num_philos;
+	t_timeval			*start;
 	pthread_mutex_t		*forks;
 	t_philosopher		*philosophers;
-}						t_table;
-
-typedef struct s_input_vars
-{
-	int					number_of_philosophers;
+	int					num_philos;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
-}						t_input_vars;
+}						t_table;
 
-void					get_input(t_input_vars *input, char **argv);
+void					get_input(t_table *input, char **argv);
 long					current_time(t_timeval *start);
-void					print_philos(t_table *table);
