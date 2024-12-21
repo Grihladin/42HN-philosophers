@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/21 20:59:37 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:48:22 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,8 @@ t_messege_list				*lstnew(void *content);
 void						lstiter(t_messege_list *lst, void (*f)(void *));
 void						lstclear(t_messege_list **lst, void (*del)(void *));
 void						print_list(t_messege_list *lst);
+
+// printing staff
+
+void						cout(t_messege_list *output);
+void						produce_messege(t_table *table, int id, char *txt);

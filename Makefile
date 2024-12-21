@@ -23,7 +23,8 @@ VPATH = $(SRC_DIR)
 SRC = \
 $(SRC_DIR)/main.c \
 $(SRC_DIR)/utils.c \
-$(SRC_DIR)/lst_fts.c
+$(SRC_DIR)/lst_fts.c \
+$(SRC_DIR)/printing.c
 
 
 OBJ_DIR = objects
