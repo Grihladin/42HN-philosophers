@@ -6,28 +6,77 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/21 00:53:41 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:36:56 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	cout(t_timeval *start_time, int id, char *messege)
+void	cout(t_messege_list *output)
 {
-	printf("%lu %i %s\n", current_time(start_time), id, messege);
+	t_messege_list	*current;
+	int				i;
+
+	if (!output || !output->content)
+	{
+		printf("Debug: Empty list or content\n");
+		return ;
+	}
+	i = 0;
+	current = output;
+	while (1)
+	{
+		if (!current || !current->content)
+		{
+			current = output;
+			i = 0;
+			continue ;
+		}
+		if (i == current->content->id)
+		{
+			printf("%lu %i %s\n", current->content->time_stamp,
+				current->content->id, current->content->task);
+			i++;
+		}
+		if (current->next)
+			current = current->next;
+		else
+		{
+			current = output;
+		}
+	}
+}
+
+void	produce_messege(t_table *table, int id, char *txt)
+{
+	t_messege		*new_messege;
+	t_messege_list	*new_node;
+
+	new_messege = malloc(sizeof(t_messege));
+	new_messege->id = id;
+	new_messege->task = txt;
+	new_messege->time_stamp = current_time(table->start);
+	new_node = lstnew(new_messege);
+	if (!new_node)
+	{
+		free(new_messege->task);
+		free(new_messege);
+		return ;
+	}
+	lstadd_back(&table->output, new_node);
 }
 
 void	to_sleep(t_philosopher *philo)
 {
-	cout(philo->table->start, philo->id, "is sleeping");
+	produce_messege(philo->table, philo->id, "is sleeping.");
 }
-
 void	init_philosophers(t_table *table)
 {
 	int	i;
 
 	table->philosophers = malloc(sizeof(t_philosopher) * table->num_philos);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philos);
+	table->output = NULL;
 	i = 0;
 	while (i < table->num_philos)
 	{
@@ -42,7 +91,8 @@ void	init_philosophers(t_table *table)
 
 void	start_simulathion(t_table *table)
 {
-	int	i;
+	int			i;
+	pthread_t	printing;
 
 	i = 0;
 	table->start = malloc(sizeof(t_timeval));
@@ -54,12 +104,15 @@ void	start_simulathion(t_table *table)
 			(void *)&table->philosophers[i]);
 		i++;
 	}
+	pthread_create(&printing, NULL, (void *)cout, (void *)table->output);
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_join(table->philosophers[i].thread, NULL);
 		i++;
 	}
+	// print_list(table->output);
+	pthread_join(printing, NULL);
 }
 
 int	main(int argc, char **argv)

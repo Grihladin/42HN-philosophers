@@ -22,7 +22,9 @@ VPATH = $(SRC_DIR)
 
 SRC = \
 $(SRC_DIR)/main.c \
-$(SRC_DIR)/utils.c
+$(SRC_DIR)/utils.c \
+$(SRC_DIR)/lst_fts.c
+
 
 OBJ_DIR = objects
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
