@@ -6,15 +6,19 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/21 21:47:59 by mratke           ###   ########.fr       */
+/*   Updated: 2024/12/22 01:03:01 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	to_sleep(t_philosopher *philo)
+void	*to_sleep(void *arg)
 {
+	t_philosopher	*philo;
+
+	philo = (t_philosopher *)arg;
 	produce_messege(philo->table, philo->id, "is sleeping.");
+	return (NULL);
 }
 
 void	init_philosophers(t_table *table)
@@ -47,18 +51,17 @@ void	start_simulathion(t_table *table)
 	init_philosophers(table);
 	while (i < table->num_philos)
 	{
-		pthread_create(&table->philosophers[i].thread, NULL, (void *)to_sleep,
-			(void *)&table->philosophers[i]);
+		pthread_create(&table->philosophers[i].thread, NULL, to_sleep,
+			&table->philosophers[i]);
 		i++;
 	}
-	pthread_create(&printing, NULL, (void *)cout, (void *)table->output);
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_join(table->philosophers[i].thread, NULL);
 		i++;
 	}
-	pthread_join(printing, NULL);
+	print_list(table->output);
 }
 
 int	main(int argc, char **argv)
