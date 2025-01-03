@@ -21,7 +21,8 @@ SRC = \
 main.c \
 utils.c \
 lst_fts.c \
-printing.c
+printing.c \
+protocol.c
 
 
 OBJ_DIR = objects

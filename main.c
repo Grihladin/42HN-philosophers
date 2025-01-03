@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/03 19:14:06 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/03 20:12:58 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_philosophers(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		table->philosophers[i].id = i;
+		table->philosophers[i].id = i + 1;
 		table->philosophers[i].left_fork = i;
 		table->philosophers[i].right_fork = (i + 1) % table->num_philos;
 		table->philosophers[i].table = table;
@@ -42,6 +42,8 @@ void	start_simulathion(t_table *table)
 	while (i < table->num_philos)
 	{
 		pthread_create(&table->philosophers[i].thread, NULL, to_sleep,
+			&table->philosophers[i]);
+		pthread_create(&table->philosophers[i].thread, NULL, to_eat,
 			&table->philosophers[i]);
 		i++;
 	}

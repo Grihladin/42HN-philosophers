@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/03 19:11:20 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/03 19:58:45 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,4 @@ void						produce_messege(t_table *table, int id, char *txt);
 
 void						*to_sleep(void *arg);
 void						*to_think(void *arg);
+void						*to_eat(void *arg);
