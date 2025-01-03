@@ -1,4 +1,4 @@
-NAME	:= philosophers
+NAME	:= philo
 
 #################################
 #			Config				#
@@ -17,18 +17,15 @@ CFLAGS		:= -Wall -Wextra -Werror -fcolor-diagnostics
 #			Files				#
 #################################
 
-SRC_DIR = philo
-VPATH = $(SRC_DIR)
-
 SRC = \
-$(SRC_DIR)/main.c \
-$(SRC_DIR)/utils.c \
-$(SRC_DIR)/lst_fts.c \
-$(SRC_DIR)/printing.c
+main.c \
+utils.c \
+lst_fts.c \
+printing.c
 
 
 OBJ_DIR = objects
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 #################################
 #			Rules				#
