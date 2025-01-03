@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/22 00:06:03 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/03 19:11:20 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ typedef struct s_table
 	pthread_mutex_t			*forks;
 	t_philosopher			*philosophers;
 	int						num_philos;
-	int						time_to_die;
-	int						time_to_eat;
-	int						time_to_sleep;
+	long					time_to_die;
+	long					time_to_eat;
+	long					time_to_sleep;
 }							t_table;
 
 void						get_input(t_table *input, char **argv);
-long						current_time(t_timeval *start);
+long						get_current_time(t_timeval *start);
 
 // lst
 
@@ -73,3 +73,8 @@ void						print_list(t_messege_list *lst);
 
 void						*print_messege(void *arg);
 void						produce_messege(t_table *table, int id, char *txt);
+
+// protocol
+
+void						*to_sleep(void *arg);
+void						*to_think(void *arg);

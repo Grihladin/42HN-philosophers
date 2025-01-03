@@ -6,17 +6,17 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:57:55 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/21 00:43:08 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/03 19:22:43 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	ft_atoi(const char *str)
+static long	ft_atoi(const char *str)
 {
 	size_t	i;
-	int		sign;
-	int		result;
+	long	sign;
+	long	result;
 
 	sign = 1;
 	result = 0;
@@ -41,34 +41,22 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	get_input(t_table *input, char **argv)
+void	get_input(t_table *table, char **argv)
 {
-	input->num_philos = atoi(argv[1]);
-	input->time_to_die = atoi(argv[2]);
-	input->time_to_eat = atoi(argv[3]);
-	input->time_to_sleep = atoi(argv[4]);
+	table->num_philos = (int)ft_atoi(argv[1]);
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	table->time_to_sleep = ft_atoi(argv[4]);
 }
 
-void	print_philos(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->num_philos)
-	{
-		printf("Philo's ID: %i\n", table->philosophers[i].id);
-		i++;
-	}
-}
-
-long	current_time(t_timeval *start)
+long	get_current_time(t_timeval *start)
 {
 	t_timeval	current;
-	long		start_microsec;
-	long		current_microsec;
+	long		start_millisec;
+	long		current_millisec;
 
 	gettimeofday(&current, NULL);
-	start_microsec = (start->tv_sec * 1000000) + start->tv_usec;
-	current_microsec = (current.tv_sec * 1000000) + current.tv_usec;
-	return (current_microsec - start_microsec);
+	start_millisec = (start->tv_sec * 1000) + (start->tv_usec / 1000);
+	current_millisec = (current.tv_sec * 1000) + (current.tv_usec / 1000);
+	return (current_millisec - start_millisec);
 }

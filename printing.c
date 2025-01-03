@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/22 01:00:35 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/03 18:28:05 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	produce_messege(t_table *table, int id, char *txt)
 	new_messege = malloc(sizeof(t_messege));
 	new_messege->id = id;
 	new_messege->task = txt;
-	new_messege->time_stamp = current_time(table->start);
+	new_messege->time_stamp = get_current_time(table->start);
 	new_node = lstnew(new_messege);
 	if (!new_node)
 	{
