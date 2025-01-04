@@ -22,7 +22,8 @@ main.c \
 utils.c \
 lst_fts.c \
 printing.c \
-protocol.c
+protocol.c \
+time.c
 
 
 OBJ_DIR = objects

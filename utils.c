@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:57:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/03 19:22:43 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/04 15:26:44 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,4 @@ void	get_input(t_table *table, char **argv)
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
-}
-
-long	get_current_time(t_timeval *start)
-{
-	t_timeval	current;
-	long		start_millisec;
-	long		current_millisec;
-
-	gettimeofday(&current, NULL);
-	start_millisec = (start->tv_sec * 1000) + (start->tv_usec / 1000);
-	current_millisec = (current.tv_sec * 1000) + (current.tv_usec / 1000);
-	return (current_millisec - start_millisec);
 }
