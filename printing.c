@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/03 18:28:05 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/04 19:30:15 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	produce_messege(t_table *table, int id, char *txt)
 	new_messege->id = id;
 	new_messege->task = txt;
 	new_messege->time_stamp = get_current_time(table->start);
+	new_messege->is_printed = 0;
 	new_node = lstnew(new_messege);
 	if (!new_node)
 	{
@@ -32,43 +33,62 @@ void	produce_messege(t_table *table, int id, char *txt)
 	lstadd_back(&table->output, new_node);
 }
 
-static t_messege_list	*find_next_messege(t_messege_list *current,
-		long min_timestamp)
+static long	get_earliest_time(t_messege_list *output)
 {
-	t_messege_list	*earliest;
-	long			earliest_timestamp;
+	long			min_time;
+	t_messege_list	*current;
 
-	earliest = NULL;
-	earliest_timestamp = ULONG_MAX;
+	min_time = -1;
+	current = output;
 	while (current)
 	{
-		if (current->content && current->content->time_stamp > min_timestamp
-			&& current->content->time_stamp < earliest_timestamp)
+		if (current->content->is_printed == 0)
 		{
-			earliest_timestamp = current->content->time_stamp;
-			earliest = current;
+			if (min_time == -1 || current->content->time_stamp < min_time)
+			{
+				min_time = current->content->time_stamp;
+			}
 		}
 		current = current->next;
 	}
-	return (earliest);
+	return (min_time);
+}
+
+static t_messege_list	*find_next_messege(t_messege_list *output)
+{
+	long			min_time;
+	t_messege_list	*current;
+
+	current = output;
+	min_time = get_earliest_time(current);
+	while (current)
+	{
+		if (current->content->is_printed == 0
+			&& current->content->time_stamp == min_time)
+		{
+			current->content->is_printed = 1;
+			return (current);
+		}
+		current = current->next;
+	}
+	return (NULL);
 }
 
 void	*print_messege(void *arg)
 {
 	t_messege_list	*output;
 	t_messege_list	*next_to_print;
-	long			min_timestamp;
 
-	min_timestamp = -1;
 	output = (t_messege_list *)arg;
 	while (1)
 	{
-		next_to_print = find_next_messege(output, min_timestamp);
+		next_to_print = find_next_messege(output);
 		if (next_to_print)
 		{
 			printf("%lu %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->task);
-			min_timestamp = next_to_print->content->time_stamp;
+			usleep(1000);
 		}
 	}
+	return (NULL);
 }

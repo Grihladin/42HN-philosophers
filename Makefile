@@ -23,7 +23,8 @@ utils.c \
 lst_fts.c \
 printing.c \
 protocol.c \
-time.c
+time.c \
+initialisation.c
 
 
 OBJ_DIR = objects

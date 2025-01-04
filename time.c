@@ -6,23 +6,23 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:25:27 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 15:27:03 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:08:35 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_usleep(long time_to_sleep_ms)
+void	ft_usleep(t_timeval *start, long time_to_sleep_ms)
 {
+	long	start_orig;
+
 	if (time_to_sleep_ms <= 0)
 	{
 		return ;
 	}
-	while (time_to_sleep_ms > 0)
-	{
-		usleep(1000);
-		time_to_sleep_ms--;
-	}
+	start_orig = get_current_time(start);
+	while ((get_current_time(start) - start_orig) < time_to_sleep_ms)
+		usleep(500);
 }
 
 long	get_current_time(t_timeval *start)

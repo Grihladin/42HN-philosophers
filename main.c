@@ -6,34 +6,16 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 15:44:13 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/04 19:28:56 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	init_philosophers(t_table *table)
-{
-	int	i;
-
-	table->philosophers = malloc(sizeof(t_philosopher) * table->num_philos);
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philos);
-	table->output = NULL;
-	i = 0;
-	while (i < table->num_philos)
-	{
-		table->philosophers[i].id = i + 1;
-		table->philosophers[i].left_fork = i;
-		table->philosophers[i].right_fork = (i + 1) % table->num_philos;
-		table->philosophers[i].table = table;
-		pthread_mutex_init(&table->forks[i], NULL);
-		i++;
-	}
-}
-
 void	start_simulathion(t_table *table)
 {
-	int	i;
+	pthread_t	printing;
+	int			i;
 
 	i = 0;
 	table->start = malloc(sizeof(t_timeval));
@@ -43,15 +25,18 @@ void	start_simulathion(t_table *table)
 	{
 		pthread_create(&table->philosophers[i].thread, NULL, start_protocol,
 			&table->philosophers[i]);
+		if (i % 2 == 0)
+			usleep(100);
 		i++;
 	}
+	pthread_create(&printing, NULL, print_messege, table->output);
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_join(table->philosophers[i].thread, NULL);
 		i++;
 	}
-	print_list(table->output);
+	pthread_join(printing, NULL);
 }
 
 int	main(int argc, char **argv)

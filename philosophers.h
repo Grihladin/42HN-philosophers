@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 15:53:13 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:43:03 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_messege
 	int						id;
 	char					*task;
 	long					time_stamp;
+	int						is_printed;
 }							t_messege;
 
 typedef struct s_messege_list
@@ -60,6 +61,7 @@ typedef struct s_table
 // init
 
 void						get_input(t_table *input, char **argv);
+void						init_philosophers(t_table *table);
 
 // lst
 
@@ -73,7 +75,7 @@ void						print_list(t_messege_list *lst);
 // time
 
 long						get_current_time(t_timeval *start);
-void						ft_usleep(long time_to_sleep_ms);
+void						ft_usleep(t_timeval *start, long time_to_sleep_ms);
 
 // protocol
 
@@ -86,3 +88,7 @@ void						*start_protocol(void *arg);
 
 void						*print_messege(void *arg);
 void						produce_messege(t_table *table, int id, char *txt);
+
+// utils
+
+long						ft_atoi(const char *str);
