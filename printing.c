@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 19:42:51 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/05 20:15:26 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	*print_messege(void *arg)
 		{
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->id, next_to_print->content->task);
+			if (ft_strcmp("died", next_to_print->content->task) == 0)
+				break ;
 			usleep(1000);
 		}
 	}

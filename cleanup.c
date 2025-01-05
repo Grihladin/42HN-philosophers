@@ -6,8 +6,12 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 19:39:43 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 19:39:51 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/05 19:18:40 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	stop_all_threads(t_table table)
+{
+}

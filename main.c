@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 19:28:56 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/05 22:51:39 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	start_simulathion(t_table *table)
 {
 	pthread_t	printing;
+	pthread_t	check_death;
 	int			i;
 
 	i = 0;
@@ -30,6 +31,7 @@ void	start_simulathion(t_table *table)
 		i++;
 	}
 	pthread_create(&printing, NULL, print_messege, table->output);
+	pthread_create(&check_death, NULL, death_monitor, table);
 	i = 0;
 	while (i < table->num_philos)
 	{
@@ -37,17 +39,17 @@ void	start_simulathion(t_table *table)
 		i++;
 	}
 	pthread_join(printing, NULL);
+	pthread_join(check_death, NULL);
 }
 
 int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	if (argc != 5)
+	if (get_input(&table, argv, argc) == 1)
 	{
-		printf("INVALID INPUT\n");
+		printf("Invalid args\n");
 		return (1);
 	}
-	get_input(&table, argv);
 	start_simulathion(&table);
 }

@@ -11,7 +11,7 @@ CC	:= gcc
 #################################
 
 DEBUG_FLAGS	:= -g -fsanitize=address -fsanitize=undefined -O0
-CFLAGS		:= -Wall -Wextra -Werror -fcolor-diagnostics
+CFLAGS		:= -Wall -Wextra -Werror
 
 #################################
 #			Files				#
@@ -24,7 +24,8 @@ lst_fts.c \
 printing.c \
 protocol.c \
 time.c \
-initialisation.c
+initialisation.c \
+death_check.c
 
 
 OBJ_DIR = objects
