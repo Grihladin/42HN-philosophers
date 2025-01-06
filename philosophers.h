@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/05 23:04:28 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/06 17:02:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_table
 {
 	pthread_mutex_t			death_mutex;
 	int						someone_died;
+	int						limit_reached;
 	t_messege_list			*output;
 	t_timeval				*start;
 	pthread_mutex_t			*forks;

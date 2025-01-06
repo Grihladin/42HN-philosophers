@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/05 20:15:26 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/06 18:37:27 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ static t_messege_list	*find_next_messege(t_messege_list *output)
 
 void	*print_messege(void *arg)
 {
+	t_table			*table;
 	t_messege_list	*output;
 	t_messege_list	*next_to_print;
 
-	output = (t_messege_list *)arg;
+	table = (t_table *)arg;
+	output = table->output;
 	while (1)
 	{
 		next_to_print = find_next_messege(output);
@@ -88,6 +90,8 @@ void	*print_messege(void *arg)
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->id, next_to_print->content->task);
 			if (ft_strcmp("died", next_to_print->content->task) == 0)
+				break ;
+			if (table->limit_reached == 1)
 				break ;
 			usleep(1000);
 		}
