@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 19:39:43 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/07 22:45:46 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/07 22:58:26 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	clean_all(t_table *table)
 		i++;
 	}
 	lstclear(&table->output, free);
+	pthread_mutex_destroy(&table->death_mutex);
 	free(table->philosophers);
 }
