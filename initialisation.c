@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:56:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/06 18:45:18 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:25:32 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	get_input(t_table *table, char **argv, int argc)
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (table->time_to_sleep <= 0)
 		return (1);
+	table->meals_limit = -1;
 	if (argc == 6)
 	{
 		table->meals_limit = (int)ft_atoi(argv[5]);

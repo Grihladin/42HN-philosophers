@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/06 18:38:24 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:26:05 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ void	*death_monitor(void *arg)
 		while (i < table->num_philos)
 		{
 			if (table->philosophers[i].meals_eaten == -1)
+			{
+				i++;
 				continue ;
-			else if (table->philosophers[i].meals_eaten == table->meals_limit)
+			}
+			else if (table->meals_limit != -1
+				&& table->philosophers[i].meals_eaten == table->meals_limit)
 			{
 				philos_reached_limit++;
 				table->philosophers[i].meals_eaten = -1;
+				i++;
 			}
 			if (philos_reached_limit == table->num_philos)
 			{
