@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 19:10:25 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/07 18:59:32 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/07 20:31:14 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void	*start_protocol(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	if (philo->id % 2 == 0)
+	if (philo->id % 3 == 0)
+	{
+		to_think(philo);
 		usleep(100);
+	}
 	while (philo->table->someone_died == 0 && philo->table->limit_reached == 0)
 	{
 		to_eat(philo);
