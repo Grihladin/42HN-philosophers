@@ -25,7 +25,8 @@ printing.c \
 protocol.c \
 time.c \
 initialisation.c \
-death_check.c
+death_check.c \
+cleanup.c
 
 
 OBJ_DIR = objects

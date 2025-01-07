@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/06 18:33:30 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/07 22:46:48 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	start_simulathion(&table);
+	clean_all(&table);
 }
