@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:56:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/07 19:25:32 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/09 01:46:48 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_philosophers(t_table *table)
 	table->output = NULL;
 	table->someone_died = 0;
 	table->limit_reached = 0;
+	gettimeofday(table->start, NULL);
 	pthread_mutex_init(&table->death_mutex, NULL);
 	i = 0;
 	while (i < table->num_philos)

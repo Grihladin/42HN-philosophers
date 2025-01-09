@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/07 20:00:07 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/09 01:20:18 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,8 @@ void	*print_messege(void *arg)
 		{
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->id, next_to_print->content->task);
-			if (ft_strcmp("died", next_to_print->content->task) == 0)
-				break ;
-			if (table->limit_reached == 1)
+			if (ft_strcmp("died", next_to_print->content->task) == 0
+				|| table->limit_reached == 1)
 				break ;
 			usleep(1000);
 		}
