@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/07 22:45:56 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:23:17 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_philosopher
 typedef struct s_table
 {
 	pthread_mutex_t			death_mutex;
+	pthread_mutex_t			list_mutex;
 	int						someone_died;
 	int						limit_reached;
 	t_messege_list			*output;

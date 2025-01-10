@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/09 01:20:18 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:45:46 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,19 @@ void	produce_messege(t_table *table, int id, char *txt)
 		lstclear(&table->output, free);
 		return ;
 	}
+	pthread_mutex_lock(&table->list_mutex);
 	lstadd_back(&table->output, new_node);
+	pthread_mutex_unlock(&table->list_mutex);
 }
 
-static long	get_earliest_time(t_messege_list *output)
+static long	get_earliest_time(t_table *table)
 {
 	long			min_time;
 	t_messege_list	*current;
 
 	min_time = -1;
-	current = output;
+	current = table->output;
+	pthread_mutex_lock(&table->list_mutex);
 	while (current)
 	{
 		if (current->content->is_printed == 0)
@@ -51,40 +54,42 @@ static long	get_earliest_time(t_messege_list *output)
 		}
 		current = current->next;
 	}
+	pthread_mutex_unlock(&table->list_mutex);
 	return (min_time);
 }
 
-static t_messege_list	*find_next_messege(t_messege_list *output)
+static t_messege_list	*find_next_messege(t_table *table)
 {
 	long			min_time;
 	t_messege_list	*current;
 
-	current = output;
-	min_time = get_earliest_time(current);
+	current = table->output;
+	min_time = get_earliest_time(table);
+	pthread_mutex_lock(&table->list_mutex);
 	while (current)
 	{
 		if (current->content->is_printed == 0
 			&& current->content->time_stamp == min_time)
 		{
 			current->content->is_printed = 1;
+			pthread_mutex_unlock(&table->list_mutex);
 			return (current);
 		}
 		current = current->next;
 	}
+	pthread_mutex_unlock(&table->list_mutex);
 	return (NULL);
 }
 
 void	*print_messege(void *arg)
 {
 	t_table			*table;
-	t_messege_list	*output;
 	t_messege_list	*next_to_print;
 
 	table = (t_table *)arg;
-	output = table->output;
 	while (1)
 	{
-		next_to_print = find_next_messege(output);
+		next_to_print = find_next_messege(table);
 		if (next_to_print)
 		{
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,

@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 19:39:43 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/09 01:40:15 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/10 18:22:54 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	clean_all(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		pthread_mutex_unlock(&table->forks[i]);
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
 	lstclear(&table->output, free);
 	pthread_mutex_destroy(&table->death_mutex);
+	pthread_mutex_destroy(&table->list_mutex);
 	free(table->philosophers);
 	free(table->forks);
 	free(table->start);
