@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 20:05:53 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:20:42 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philosopher
 	int						left_fork;
 	int						right_fork;
 	pthread_t				thread;
+	pthread_mutex_t			meals_mutex;
 	int						eating;
 	int						meals_eaten;
 	long					last_meal_time;

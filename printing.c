@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/10 21:44:41 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:28:52 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	produce_messege(t_table *table, int id, char *txt)
 	t_messege		*new_messege;
 	t_messege_list	*new_node;
 
+	pthread_mutex_lock(&table->list_mutex);
 	new_messege = malloc(sizeof(t_messege));
 	new_messege->id = id;
 	new_messege->task = txt;
@@ -28,9 +29,9 @@ void	produce_messege(t_table *table, int id, char *txt)
 		free(new_messege->task);
 		free(new_messege);
 		lstclear(&table->output, free);
+		pthread_mutex_unlock(&table->list_mutex);
 		return ;
 	}
-	pthread_mutex_lock(&table->list_mutex);
 	lstadd_back(&table->output, new_node);
 	pthread_mutex_unlock(&table->list_mutex);
 }
@@ -41,8 +42,8 @@ static long	get_earliest_time(t_table *table)
 	t_messege_list	*current;
 
 	min_time = -1;
-	current = table->output;
 	pthread_mutex_lock(&table->list_mutex);
+	current = table->output;
 	while (current)
 	{
 		if (current->content->is_printed == 0)
@@ -63,9 +64,9 @@ static t_messege_list	*find_next_messege(t_table *table)
 	long			min_time;
 	t_messege_list	*current;
 
-	current = table->output;
 	min_time = get_earliest_time(table);
 	pthread_mutex_lock(&table->list_mutex);
+	current = table->output;
 	while (current)
 	{
 		if (current->content->is_printed == 0
