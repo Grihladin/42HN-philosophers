@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 17:21:38 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:01:20 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,16 @@ void	*death_monitor(void *arg)
 	while (1)
 	{
 		i = 0;
-		pthread_mutex_lock(&table->death_mutex);
 		while (i < table->num_philos)
 		{
 			if (check_if_limit_reached(table, i) == 1 || check_if_dead(table,
 					i) == 1)
 			{
-				return (pthread_mutex_unlock(&table->death_mutex), NULL);
+				return (NULL);
 			}
 			i++;
 		}
-		pthread_mutex_unlock(&table->death_mutex);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }

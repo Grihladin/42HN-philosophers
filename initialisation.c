@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:56:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/10 18:22:36 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 19:51:53 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_philosophers(t_table *table)
 		table->philosophers[i].right_fork = (i + 1) % table->num_philos;
 		table->philosophers[i].table = table;
 		table->philosophers[i].last_meal_time = 0;
-		table->philosophers[i].meals_eaten = -1;
+		table->philosophers[i].meals_eaten = 0;
 		i++;
 	}
 }
