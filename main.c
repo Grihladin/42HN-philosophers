@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/09 01:18:03 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:03:27 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	start_simulathion(t_table *table)
 	pthread_t	printing;
 
 	i = 0;
-	table->start = malloc(sizeof(t_timeval));
 	init_philosophers(table);
 	while (i < table->num_philos)
 	{
