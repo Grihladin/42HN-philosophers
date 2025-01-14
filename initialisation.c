@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:56:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 20:03:46 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 23:26:46 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ void	init_philosophers(t_table *table)
 	table->limit_reached = 0;
 	pthread_mutex_init(&table->death_mutex, NULL);
 	pthread_mutex_init(&table->list_mutex, NULL);
+	pthread_mutex_init(&table->limit_reached_mutex, NULL);
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_mutex_init(&table->forks[i], NULL);
+		pthread_mutex_init(&table->philosophers[i].meals_mutex, NULL);
 		table->philosophers[i].id = i + 1;
 		table->philosophers[i].left_fork = i;
 		table->philosophers[i].right_fork = (i + 1) % table->num_philos;

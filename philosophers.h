@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 20:20:42 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:46:02 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_table
 	t_philosopher			*philosophers;
 	int						num_philos;
 	int						meals_limit;
+	int						philos_reached_limit;
+	pthread_mutex_t			limit_reached_mutex;
 	long					time_to_die;
 	long					time_to_eat;
 	long					time_to_sleep;

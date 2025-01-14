@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 20:28:52 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/14 22:52:26 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	produce_messege(t_table *table, int id, char *txt)
 	t_messege		*new_messege;
 	t_messege_list	*new_node;
 
-	pthread_mutex_lock(&table->list_mutex);
 	new_messege = malloc(sizeof(t_messege));
 	new_messege->id = id;
 	new_messege->task = txt;
+	pthread_mutex_lock(&table->list_mutex);
 	new_messege->time_stamp = get_current_time(table->start);
 	new_messege->is_printed = 0;
 	new_node = lstnew(new_messege);
@@ -95,9 +95,14 @@ void	*print_messege(void *arg)
 		{
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->id, next_to_print->content->task);
+			pthread_mutex_lock(&table->death_mutex);
 			if (ft_strcmp("died", next_to_print->content->task) == 0
 				|| table->limit_reached == 1)
+			{
+				pthread_mutex_unlock(&table->death_mutex);
 				break ;
+			}
+			pthread_mutex_unlock(&table->death_mutex);
 			usleep(1000);
 		}
 	}
