@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 22:52:26 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/15 02:00:30 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	*print_messege(void *arg)
 				break ;
 			}
 			pthread_mutex_unlock(&table->death_mutex);
-			usleep(1000);
+			usleep(PRINT_DELAY);
 		}
 	}
 	return (NULL);

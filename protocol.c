@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 19:10:25 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 23:23:09 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/15 01:05:57 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,32 @@ void	to_think(t_philosopher *philo)
 	produce_messege(philo->table, philo->id, "is thinking");
 }
 
+static void	control_forks(t_philosopher *philo, int *first_fork,
+		int *second_fork)
+{
+	if (philo->id % 2 == 0)
+	{
+		*first_fork = philo->right_fork;
+		*second_fork = philo->left_fork;
+	}
+	else
+	{
+		*first_fork = philo->left_fork;
+		*second_fork = philo->right_fork;
+	}
+}
+
 void	to_eat(t_philosopher *philo)
 {
 	int	first_fork;
 	int	second_fork;
 
-	if (philo->id % 2 == 0)
-	{
-		first_fork = philo->right_fork;
-		second_fork = philo->left_fork;
-	}
-	else
-	{
-		first_fork = philo->left_fork;
-		second_fork = philo->right_fork;
-	}
+	first_fork = 0;
+	second_fork = 0;
+	control_forks(philo, &first_fork, &second_fork);
 	pthread_mutex_lock(&philo->table->forks[first_fork]);
 	produce_messege(philo->table, philo->id, "has taken a fork");
+	usleep(DEFAULT_DELAY);
 	pthread_mutex_lock(&philo->table->forks[second_fork]);
 	produce_messege(philo->table, philo->id, "has taken a fork");
 	pthread_mutex_lock(&philo->table->death_mutex);
@@ -63,7 +72,7 @@ void	*start_protocol(void *arg)
 	philo = (t_philosopher *)arg;
 	if (philo->id % 2 == 0)
 	{
-		usleep(100);
+		usleep(DEFAULT_DELAY);
 	}
 	while (1)
 	{

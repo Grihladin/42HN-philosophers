@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:25:27 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/04 18:08:35 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/15 00:24:18 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_usleep(t_timeval *start, long time_to_sleep_ms)
 	}
 	start_orig = get_current_time(start);
 	while ((get_current_time(start) - start_orig) < time_to_sleep_ms)
-		usleep(500);
+		usleep(PRECISE_TIME_CALC_DELAY);
 }
 
 long	get_current_time(t_timeval *start)

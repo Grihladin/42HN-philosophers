@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 20:54:46 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/15 02:18:54 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,36 @@ static int	check_if_dead(t_table *table, int i)
 	return (0);
 }
 
+static void	unlock_limite_checker_mutexes(t_table *table, int i)
+{
+	pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
+	pthread_mutex_unlock(&table->limit_reached_mutex);
+}
+
 static int	check_if_limit_reached(t_table *table, int i)
 {
 	pthread_mutex_lock(&table->limit_reached_mutex);
 	pthread_mutex_lock(&table->philosophers[i].meals_mutex);
 	if (table->philosophers[i].meals_eaten == -1)
 	{
-		pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
-		pthread_mutex_unlock(&table->limit_reached_mutex);
+		unlock_limite_checker_mutexes(table, i);
 		return (0);
 	}
-	else if (table->meals_limit != -1
-		&& table->philosophers[i].meals_eaten == table->meals_limit)
+	if (table->meals_limit != -1
+		&& table->philosophers[i].meals_eaten >= table->meals_limit)
 	{
 		table->philos_reached_limit++;
 		table->philosophers[i].meals_eaten = -1;
-		pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
-		pthread_mutex_unlock(&table->limit_reached_mutex);
+		if (table->philos_reached_limit >= table->num_philos)
+		{
+			table->limit_reached = 1;
+			unlock_limite_checker_mutexes(table, i);
+			return (1);
+		}
+		unlock_limite_checker_mutexes(table, i);
 		return (0);
 	}
-	if (table->philos_reached_limit == table->num_philos)
-	{
-		table->limit_reached = 1;
-		pthread_mutex_unlock(&table->limit_reached_mutex);
-		pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
-	pthread_mutex_unlock(&table->limit_reached_mutex);
+	unlock_limite_checker_mutexes(table, i);
 	return (0);
 }
 
@@ -80,7 +82,7 @@ void	*death_monitor(void *arg)
 			i++;
 		}
 		pthread_mutex_unlock(&table->death_mutex);
-		usleep(1000);
+		usleep(MONITOR_DELAY);
 	}
 	return (NULL);
 }
