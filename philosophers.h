@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 18:07:57 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:36:39 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 #include <unistd.h>
 
 // microseconds
-#define PRINT_DELAY 10000
-#define MONITOR_DELAY 2500
-#define DEFAULT_DELAY 1000
-#define PRECISE_TIME_CALC_DELAY 50
+#define PRINT_DELAY 100000
+#define MONITOR_DELAY 10000
+#define DEFAULT_DELAY 5000
+#define PRECISE_TIME_CALC_DELAY 500
 
 typedef struct timeval		t_timeval;
 

@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 19:10:25 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 18:31:40 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 23:48:50 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,13 @@ void	to_eat(t_philosopher *philo)
 	int	first_fork;
 	int	second_fork;
 
-	first_fork = 0;
-	second_fork = 0;
 	control_forks(philo, &first_fork, &second_fork);
 	pthread_mutex_lock(&philo->table->forks[first_fork]);
 	produce_message(philo->table, philo->id, "has taken a fork");
 	pthread_mutex_lock(&philo->table->forks[second_fork]);
 	produce_message(philo->table, philo->id, "has taken a fork");
-	pthread_mutex_lock(&philo->table->death_mutex);
-	philo->last_meal_time = get_current_time(philo->table->start);
-	pthread_mutex_unlock(&philo->table->death_mutex);
 	pthread_mutex_lock(&philo->meals_mutex);
+	philo->last_meal_time = get_current_time(philo->table->start);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meals_mutex);
 	produce_message(philo->table, philo->id, "is eating");
@@ -64,9 +60,9 @@ void	to_eat(t_philosopher *philo)
 
 void	*start_protocol(void *arg)
 {
+	int				should_continue;
 	t_philosopher	*philo;
 
-	int should_continue ;
 	should_continue = 1;
 	philo = (t_philosopher *)arg;
 	while (1)
