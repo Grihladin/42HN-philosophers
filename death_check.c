@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/15 02:18:54 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:08:18 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_if_dead(t_table *table, int i)
 	if ((get_current_time(table->start)
 			- table->philosophers[i].last_meal_time) > table->time_to_die)
 	{
-		produce_messege(table, table->philosophers[i].id, "died");
+		produce_message(table, table->philosophers[i].id, "died");
 		table->someone_died = 1;
 		return (1);
 	}

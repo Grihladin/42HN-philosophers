@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/14 22:51:27 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:07:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	start_simulathion(t_table *table)
 			usleep(100);
 		i++;
 	}
-	pthread_create(&printing, NULL, print_messege, table);
+	pthread_create(&printing, NULL, print_message, table);
 	pthread_create(&check_death, NULL, death_monitor, table);
 	i = 0;
 	while (i < table->num_philos)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/15 01:44:19 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:07:57 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@
 
 typedef struct timeval		t_timeval;
 
-typedef struct s_messege
+typedef struct s_message
 {
 	int						id;
 	char					*task;
 	long					time_stamp;
 	int						is_printed;
-}							t_messege;
+}							t_message;
 
-typedef struct s_messege_list
+typedef struct s_message_list
 {
-	t_messege				*content;
-	struct s_messege_list	*next;
-}							t_messege_list;
+	t_message				*content;
+	struct s_message_list	*next;
+}							t_message_list;
 
 typedef struct s_philosopher
 {
@@ -59,7 +59,7 @@ typedef struct s_table
 	pthread_mutex_t			list_mutex;
 	int						someone_died;
 	int						limit_reached;
-	t_messege_list			*output;
+	t_message_list			*output;
 	t_timeval				*start;
 	pthread_mutex_t			*forks;
 	t_philosopher			*philosophers;
@@ -79,12 +79,12 @@ void						init_philosophers(t_table *table);
 
 // lst
 
-void						lstadd_back(t_messege_list **lst,
-								t_messege_list *new);
-t_messege_list				*lstnew(void *content);
-void						lstiter(t_messege_list *lst, void (*f)(void *));
-void						lstclear(t_messege_list **lst, void (*del)(void *));
-void						print_list(t_messege_list *lst);
+void						lstadd_back(t_message_list **lst,
+								t_message_list *new);
+t_message_list				*lstnew(void *content);
+void						lstiter(t_message_list *lst, void (*f)(void *));
+void						lstclear(t_message_list **lst, void (*del)(void *));
+void						print_list(t_message_list *lst);
 
 // time
 
@@ -104,8 +104,8 @@ void						*death_monitor(void *arg);
 
 // printing staff
 
-void						*print_messege(void *arg);
-void						produce_messege(t_table *table, int id, char *txt);
+void						*print_message(void *arg);
+void						produce_message(t_table *table, int id, char *txt);
 
 // utils
 

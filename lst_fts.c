@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   lst_fts.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:12:06 by mratke            #+#    #+#             */
-/*   Updated: 2024/12/21 20:59:29 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/19 18:11:41 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	lstadd_back(t_messege_list **lst, t_messege_list *new)
+void	lstadd_back(t_message_list **lst, t_message_list *new)
 {
-	t_messege_list	*current;
+	t_message_list	*current;
 
 	if (new == NULL)
 	{
@@ -34,11 +34,11 @@ void	lstadd_back(t_messege_list **lst, t_messege_list *new)
 	return ;
 }
 
-t_messege_list	*lstnew(void *content)
+t_message_list	*lstnew(void *content)
 {
-	t_messege_list	*new_node;
+	t_message_list	*new_node;
 
-	new_node = (t_messege_list *)malloc(sizeof(t_messege_list));
+	new_node = (t_message_list *)malloc(sizeof(t_message_list));
 	if (new_node == NULL)
 	{
 		return (NULL);
@@ -48,9 +48,9 @@ t_messege_list	*lstnew(void *content)
 	return (new_node);
 }
 
-void	lstiter(t_messege_list *lst, void (*f)(void *))
+void	lstiter(t_message_list *lst, void (*f)(void *))
 {
-	t_messege_list	*current;
+	t_message_list	*current;
 
 	current = lst;
 	while (current != NULL)
@@ -61,9 +61,9 @@ void	lstiter(t_messege_list *lst, void (*f)(void *))
 	return ;
 }
 
-void	lstclear(t_messege_list **lst, void (*del)(void *))
+void	lstclear(t_message_list **lst, void (*del)(void *))
 {
-	t_messege_list	*tmp;
+	t_message_list	*tmp;
 
 	while (*lst != NULL)
 	{
@@ -75,9 +75,9 @@ void	lstclear(t_messege_list **lst, void (*del)(void *))
 	return ;
 }
 
-void	print_list(t_messege_list *lst)
+void	print_list(t_message_list *lst)
 {
-	t_messege_list	*current;
+	t_message_list	*current;
 
 	if (!lst)
 	{
