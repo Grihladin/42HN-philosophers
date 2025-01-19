@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 18:09:59 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:57:45 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	produce_message(t_table *table, int id, char *txt)
 	new_message = malloc(sizeof(t_message));
 	new_message->id = id;
 	new_message->task = txt;
-	pthread_mutex_lock(&table->list_mutex);
-	new_message->time_stamp = get_current_time(table->start);
 	new_message->is_printed = 0;
 	new_node = lstnew(new_message);
 	if (!new_node)
@@ -32,15 +30,19 @@ void	produce_message(t_table *table, int id, char *txt)
 		pthread_mutex_unlock(&table->list_mutex);
 		return ;
 	}
+	pthread_mutex_lock(&table->list_mutex);
+	new_message->time_stamp = get_current_time(table->start);
 	lstadd_back(&table->output, new_node);
 	pthread_mutex_unlock(&table->list_mutex);
 }
 
-static long	get_earliest_time(t_table *table)
+static t_message_list	*find_next_message(t_table *table)
 {
-	long			min_time;
 	t_message_list	*current;
+	t_message_list	*result;
+	long			min_time;
 
+	result = NULL;
 	min_time = -1;
 	pthread_mutex_lock(&table->list_mutex);
 	current = table->output;
@@ -51,60 +53,41 @@ static long	get_earliest_time(t_table *table)
 			if (min_time == -1 || current->content->time_stamp < min_time)
 			{
 				min_time = current->content->time_stamp;
+				result = current;
 			}
 		}
 		current = current->next;
 	}
+	if (result)
+		result->content->is_printed = 1;
 	pthread_mutex_unlock(&table->list_mutex);
-	return (min_time);
-}
-
-static t_message_list	*find_next_message(t_table *table)
-{
-	long			min_time;
-	t_message_list	*current;
-
-	min_time = get_earliest_time(table);
-	pthread_mutex_lock(&table->list_mutex);
-	current = table->output;
-	while (current)
-	{
-		if (current->content->is_printed == 0
-			&& current->content->time_stamp == min_time)
-		{
-			current->content->is_printed = 1;
-			pthread_mutex_unlock(&table->list_mutex);
-			return (current);
-		}
-		current = current->next;
-	}
-	pthread_mutex_unlock(&table->list_mutex);
-	return (NULL);
+	return (result);
 }
 
 void	*print_message(void *arg)
 {
 	t_table			*table;
 	t_message_list	*next_to_print;
+	int				limit_reached;
 
+	limit_reached = 0;
 	table = (t_table *)arg;
 	while (1)
 	{
+		pthread_mutex_lock(&table->death_mutex);
+		limit_reached = table->limit_reached;
+		pthread_mutex_unlock(&table->death_mutex);
+		if (limit_reached == 1)
+			break ;
 		next_to_print = find_next_message(table);
 		if (next_to_print)
 		{
 			printf("%lu %i %s\n", next_to_print->content->time_stamp,
 				next_to_print->content->id, next_to_print->content->task);
-			pthread_mutex_lock(&table->death_mutex);
-			if (ft_strcmp("died", next_to_print->content->task) == 0
-				|| table->limit_reached == 1)
-			{
-				pthread_mutex_unlock(&table->death_mutex);
+			if (ft_strcmp("died", next_to_print->content->task) == 0)
 				break ;
-			}
-			pthread_mutex_unlock(&table->death_mutex);
-			usleep(PRINT_DELAY);
 		}
+		usleep(PRINT_DELAY);
 	}
 	return (NULL);
 }

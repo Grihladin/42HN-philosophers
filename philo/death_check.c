@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 23:40:44 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:37:03 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	check_if_limit_reached(t_table *table, int i)
 	}
 	if (table->meals_limit != -1)
 	{
-		if (table->philosophers[i].meals_eaten >= table->meals_limit)
+		if (table->philosophers[i].meals_eaten > table->meals_limit)
 		{
 			if (table->philosophers[i].meals_eaten != -1)
 			{
