@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 19:10:25 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 23:57:31 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 00:21:31 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	to_eat(t_philosopher *philo)
 
 void	*start_protocol(void *arg)
 {
+	int				should_continue;
 	t_philosopher	*philo;
 
-	int should_continue ;
 	should_continue = 1;
 	philo = (t_philosopher *)arg;
 	if (philo->table->num_philos == 1)
