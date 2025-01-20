@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 00:56:18 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 01:04:56 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 
 // microseconds
-#define PRINT_DELAY 1000
+#define PRINT_DELAY 500
 #define MONITOR_DELAY 5000
 #define DEFAULT_DELAY 2500
 #define PRECISE_TIME_CALC_DELAY 100
