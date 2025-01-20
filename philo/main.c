@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 21:53:39 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 22:47:35 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	start_simulathion(t_table *table)
 			usleep(100);
 		i++;
 	}
-	if (print_message(table) == 1)
-		return ;
+	print_message(table);
 	i = 0;
 	while (i < table->num_philos)
 	{
