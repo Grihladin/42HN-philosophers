@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 19:10:25 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 00:21:31 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:34:13 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,12 @@ void	*start_protocol(void *arg)
 		produce_message(philo->table, philo->id, "has taken a fork");
 		return (NULL);
 	}
-	while (1)
+	while (should_continue == 1)
 	{
 		pthread_mutex_lock(&philo->table->death_mutex);
 		if (philo->table->someone_died == 1 || philo->table->limit_reached == 1)
 			should_continue = 0;
 		pthread_mutex_unlock(&philo->table->death_mutex);
-		if (should_continue == 0)
-			break ;
 		to_think(philo);
 		to_eat(philo);
 		to_sleep(philo);

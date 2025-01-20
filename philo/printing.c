@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 00:57:45 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:54:16 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,12 @@ static t_message_list	*find_next_message(t_table *table)
 	return (result);
 }
 
-void	*print_message(void *arg)
+int	print_message(t_table *table)
 {
-	t_table			*table;
 	t_message_list	*next_to_print;
 	int				limit_reached;
 
 	limit_reached = 0;
-	table = (t_table *)arg;
 	while (1)
 	{
 		pthread_mutex_lock(&table->death_mutex);
@@ -89,5 +87,5 @@ void	*print_message(void *arg)
 		}
 		usleep(PRINT_DELAY);
 	}
-	return (NULL);
+	return (1);
 }

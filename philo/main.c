@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:39:16 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/19 18:07:41 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:53:39 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	start_simulathion(t_table *table)
 {
 	pthread_t	check_death;
 	int			i;
-	pthread_t	printing;
 
 	i = 0;
 	init_philosophers(table);
+	pthread_create(&check_death, NULL, death_monitor, table);
 	while (i < table->num_philos)
 	{
 		pthread_create(&table->philosophers[i].thread, NULL, start_protocol,
@@ -28,15 +28,14 @@ void	start_simulathion(t_table *table)
 			usleep(100);
 		i++;
 	}
-	pthread_create(&printing, NULL, print_message, table);
-	pthread_create(&check_death, NULL, death_monitor, table);
+	if (print_message(table) == 1)
+		return ;
 	i = 0;
 	while (i < table->num_philos)
 	{
 		pthread_join(table->philosophers[i].thread, NULL);
 		i++;
 	}
-	pthread_join(printing, NULL);
 	pthread_join(check_death, NULL);
 }
 

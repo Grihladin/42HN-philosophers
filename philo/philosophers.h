@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 01:04:56 by mratke           ###   ########.fr       */
+/*   Updated: 2025/01/20 21:54:37 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 #include <unistd.h>
 
 // microseconds
-#define PRINT_DELAY 500
-#define MONITOR_DELAY 5000
-#define DEFAULT_DELAY 2500
+#define PRINT_DELAY 100
+#define MONITOR_DELAY 500
+#define DEFAULT_DELAY 250
 #define PRECISE_TIME_CALC_DELAY 100
 
 typedef struct timeval		t_timeval;
@@ -104,7 +104,7 @@ void						*death_monitor(void *arg);
 
 // printing staff
 
-void						*print_message(void *arg);
+int							print_message(t_table *table);
 void						produce_message(t_table *table, int id, char *txt);
 
 // utils
