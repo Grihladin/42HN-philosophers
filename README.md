@@ -6,11 +6,11 @@
 
 Philosophers([42Heilbronn](https://www.42heilbronn.de/en/) project) simulates the classic dining philosophers problem using threads and mutexes. The program demonstrates concurrent programming concepts while avoiding deadlocks and race conditions.
 
-## Problem Description
+## 🍽️ Problem Description
 
 The dining philosophers problem involves N philosophers sitting around a circular table with N forks. Each philosopher alternates between thinking, eating, and sleeping. To eat, a philosopher needs both adjacent forks, but must avoid deadlock situations.
 
-## Implementation
+## 🛠️ Implementation
 
 - **Threading**: Each philosopher runs in a separate thread
 - **Mutex Protection**: Forks are protected by mutexes to prevent race conditions
@@ -18,14 +18,14 @@ The dining philosophers problem involves N philosophers sitting around a circula
 - **Death Monitoring**: Separate thread monitors for philosopher deaths
 - **Message Queue**: Timestamp-ordered output system for thread-safe printing
 
-## Performance Optimizations
+## ⚡ Performance Optimizations
 
 - **Adaptive Monitoring**: Death monitor frequency adjusts based on time_to_die
 - **Hybrid Sleep Function**: Combines actual sleep with busy-waiting for precision
 - **Reduced Mutex Contention**: Less frequent status checks in philosopher loop
 - **Smart Print Delays**: Adaptive delays when no messages are available
 
-## Installation
+## 📦 Installation
 
 **Requirements:**
 - macOS or Linux
@@ -37,7 +37,7 @@ cd 42HN-philosophers/philo
 make
 ```
 
-## Usage
+## 🚀 Usage
 
 ```bash
 ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat (optional)]
@@ -56,7 +56,7 @@ make
 ./philo 4 410 200 200 5
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 philo/
