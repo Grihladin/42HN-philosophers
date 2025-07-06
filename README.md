@@ -61,17 +61,17 @@ make
 ```
 philo/
 ├── philosophers.h      # Header file with structures and function declarations
-├── main.c             # Main program entry point and simulation setup
-├── protocol.c         # Philosopher behavior (think, eat, sleep)
-├── death_check.c      # Death monitoring and meal limit checking
-├── time.c             # Time utilities and optimized sleep function
-├── printing.c         # Thread-safe message output system
-├── initialisation.c   # Setup functions for philosophers and mutexes
-├── lst_fts.c          # Linked list functions for message queue
-├── utils.c            # Helper functions and input validation
-├── cleanup.c          # Memory and mutex cleanup functions
-├── Makefile           # Build configuration
-└── README.md          # Project documentation
+├── main.c              # Main program entry point and simulation setup
+├── protocol.c          # Philosopher behavior (think, eat, sleep)
+├── death_check.c       # Death monitoring and meal limit checking
+├── time.c              # Time utilities and optimized sleep function
+├── printing.c          # Thread-safe message output system
+├── initialisation.c    # Setup functions for philosophers and mutexes
+├── lst_fts.c           # Linked list functions for message queue
+├── utils.c             # Helper functions and input validation
+├── cleanup.c           # Memory and mutex cleanup functions
+├── Makefile            # Build configuration
+└── README.md           # Project documentation
 ```
 
 ---
