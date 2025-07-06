@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:43:18 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 22:28:48 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/06 03:54:22 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	print_message(t_table *table)
 {
 	t_message_list	*next_to_print;
 	int				limit_reached;
+	int				no_message_count;
 
 	limit_reached = 0;
+	no_message_count = 0;
 	while (1)
 	{
 		pthread_mutex_lock(&table->death_mutex);
@@ -84,8 +86,16 @@ int	print_message(t_table *table)
 				next_to_print->content->id, next_to_print->content->task);
 			if (ft_strcmp("died", next_to_print->content->task) == 0)
 				break ;
+			no_message_count = 0;
 		}
-		usleep(PRINT_DELAY);
+		else
+		{
+			no_message_count++;
+			if (no_message_count > 5)
+				usleep(PRINT_DELAY * 2);
+			else
+				usleep(PRINT_DELAY);
+		}
 	}
 	return (1);
 }

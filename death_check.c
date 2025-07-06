@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:34:04 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 21:26:51 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/06 03:54:22 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@ static int	check_if_dead(t_table *table, int i)
 	long	last_meal;
 	long	current_time;
 
-	pthread_mutex_lock(&table->death_mutex);
 	pthread_mutex_lock(&table->philosophers[i].meals_mutex);
 	last_meal = table->philosophers[i].last_meal_time;
-	current_time = get_current_time(table->start);
 	pthread_mutex_unlock(&table->philosophers[i].meals_mutex);
+	
+	current_time = get_current_time(table->start);
 	if (current_time - last_meal > table->time_to_die)
 	{
-		table->someone_died = 1;
-		produce_message(table, table->philosophers[i].id, "died");
+		pthread_mutex_lock(&table->death_mutex);
+		if (table->someone_died == 0)
+		{
+			table->someone_died = 1;
+			produce_message(table, table->philosophers[i].id, "died");
+		}
 		pthread_mutex_unlock(&table->death_mutex);
 		return (1);
 	}
-	pthread_mutex_unlock(&table->death_mutex);
 	return (0);
 }
 
@@ -78,8 +81,16 @@ void	*death_monitor(void *arg)
 {
 	t_table	*table;
 	int		i;
+	int		check_delay;
 
 	table = (t_table *)arg;
+	if (table->time_to_die < 100)
+		check_delay = 100;
+	else
+		check_delay = table->time_to_die / 10;
+	if (check_delay > 1000)
+		check_delay = 1000;
+	
 	while (1)
 	{
 		i = 0;
@@ -92,7 +103,7 @@ void	*death_monitor(void *arg)
 			}
 			i++;
 		}
-		usleep(MONITOR_DELAY);
+		usleep(check_delay);
 	}
 	return (NULL);
 }

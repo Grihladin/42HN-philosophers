@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mratke <mratke@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 19:46:47 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/20 22:28:26 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/06 03:54:22 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 #include <unistd.h>
 
 // microseconds
-#define PRINT_DELAY 100
-#define MONITOR_DELAY 500
+#define PRINT_DELAY 50
+#define MONITOR_DELAY 200
 #define DEFAULT_DELAY 250
-#define PRECISE_TIME_CALC_DELAY 100
+#define PRECISE_TIME_CALC_DELAY 500
 
 typedef struct timeval		t_timeval;
 

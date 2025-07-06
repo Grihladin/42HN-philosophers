@@ -6,7 +6,7 @@
 /*   By: mratke <mratke@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:56:55 by mratke            #+#    #+#             */
-/*   Updated: 2025/01/15 01:58:29 by mratke           ###   ########.fr       */
+/*   Updated: 2025/07/06 03:12:30 by mratke           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_input(t_table *table, char **argv, int argc)
 	if (argc != 5 && argc != 6)
 		return (1);
 	table->num_philos = (int)ft_atoi(argv[1]);
-	if (table->num_philos > 200 || table->num_philos <= 0)
+	if (table->num_philos <= 0)
 		return (1);
 	table->time_to_die = ft_atoi(argv[2]);
 	if (table->time_to_die <= 0)
